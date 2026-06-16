@@ -6,8 +6,8 @@
 
 import React from 'react';
 import { View, Text } from 'react-native';
-import Svg, { Circle, Path } from 'react-native-svg';
 import { styles } from './styles';
+import { AvatarIcon } from '@/asset';
 
 interface ProfileHeaderProps {
   name: string;
@@ -20,21 +20,7 @@ export function ProfileHeader({ name, goal, avatarColor }: ProfileHeaderProps) {
     <View style={styles.container}>
       <View style={[styles.avatarWrapper, { borderColor: avatarColor }]}>
         <View style={styles.avatarInner}>
-          <Svg width="36" height="36" viewBox="0 0 24 24" fill="none">
-            <Circle
-              cx="12"
-              cy="8"
-              r="4.5"
-              stroke={avatarColor}
-              strokeWidth="2"
-            />
-            <Path
-              d="M4.5 20C4.5 16.134 7.63401 13 11.5 13H12.5C16.366 13 19.5 16.134 19.5 20"
-              stroke={avatarColor}
-              strokeWidth="2"
-              strokeLinecap="round"
-            />
-          </Svg>
+          <AvatarIcon color={avatarColor} size={36} />
         </View>
       </View>
 

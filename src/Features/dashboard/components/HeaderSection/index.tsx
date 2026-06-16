@@ -6,8 +6,8 @@
 
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import Svg, { Circle, Path } from 'react-native-svg';
 import { styles } from './styles';
+import { ProfileNeonIcon } from '@/asset';
 
 interface HeaderSectionProps {
   vibeName: string;
@@ -25,21 +25,7 @@ export function HeaderSection({ vibeName }: HeaderSectionProps) {
 
       <TouchableOpacity activeOpacity={0.8} style={styles.crownButton}>
         <View style={styles.crownInner}>
-          <Svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-            <Circle
-              cx="12"
-              cy="8"
-              r="4"
-              stroke="#C2FF1A"
-              strokeWidth="2.5"
-            />
-            <Path
-              d="M4 20C4 16.6863 6.68629 14 10 14H14C17.3137 14 20 16.6863 20 20"
-              stroke="#C2FF1A"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-            />
-          </Svg>
+          <ProfileNeonIcon color="#C2FF1A" size={22} />
         </View>
       </TouchableOpacity>
     </View>

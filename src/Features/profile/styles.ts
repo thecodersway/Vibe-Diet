@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 
 export const styles = StyleSheet.create({
   safeArea: {
@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
     flex: 1,
   },
   scrollContent: {
-    paddingBottom: 24,
+    paddingBottom: Platform.OS === 'ios' ? 130 : 116,
   },
   divider: {
     height: 12, // Empty spacer separating metric card groups
