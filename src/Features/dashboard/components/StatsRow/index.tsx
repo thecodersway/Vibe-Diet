@@ -7,6 +7,7 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import { styles } from './styles';
+import { useTheme } from '@/hooks/use-theme';
 
 interface StatsRowProps {
   waterCurrent: number;
@@ -19,27 +20,29 @@ export function StatsRow({
   waterTarget,
   burnedKcal,
 }: StatsRowProps) {
+  const theme = useTheme();
+
   return (
     <View style={styles.container}>
-      <View style={styles.statCard}>
+      <View style={[styles.statCard, { backgroundColor: theme.backgroundElement, borderColor: theme.border }]}>
         <View style={[styles.iconWrapper, styles.waterIconWrapper]}>
           <Text style={styles.iconEmoji}>💧</Text>
         </View>
         <View style={styles.textContainer}>
-          <Text style={styles.label}>Water</Text>
-          <Text style={styles.value}>
+          <Text style={[styles.label, { color: theme.textSecondary }]}>Water</Text>
+          <Text style={[styles.value, { color: theme.text }]}>
             {waterCurrent} / {waterTarget} L
           </Text>
         </View>
       </View>
 
-      <View style={styles.statCard}>
+      <View style={[styles.statCard, { backgroundColor: theme.backgroundElement, borderColor: theme.border }]}>
         <View style={[styles.iconWrapper, styles.burnedIconWrapper]}>
           <Text style={styles.iconEmoji}>🔥</Text>
         </View>
         <View style={styles.textContainer}>
-          <Text style={styles.label}>Burned</Text>
-          <Text style={styles.value}>
+          <Text style={[styles.label, { color: theme.textSecondary }]}>Burned</Text>
+          <Text style={[styles.value, { color: theme.text }]}>
             {burnedKcal} kcal
           </Text>
         </View>

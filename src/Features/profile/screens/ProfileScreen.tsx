@@ -8,19 +8,21 @@ import React, { useState } from 'react';
 import { ScrollView, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { ProfileHeader } from './components/ProfileHeader';
-import { MetricCard } from './components/MetricCard';
-import { ActionItem } from './components/ActionItem';
+import { ProfileHeader } from '../components/ProfileHeader';
+import { MetricCard } from '../components/MetricCard';
+import { ActionItem } from '../components/ActionItem';
 
-import { mockUserProfile } from './mockData';
-import { UserProfile } from './types';
-import { styles } from './styles';
+import { mockUserProfile } from '../mockData';
+import { UserProfile } from '../types';
+import { styles } from '../styles';
+import { useTheme } from '@/hooks/use-theme';
 
-export default function ProfileFeature() {
+export default function ProfileScreen() {
+  const theme = useTheme();
   const [profile] = useState<UserProfile>(mockUserProfile);
 
   return (
-    <SafeAreaView edges={['top']} style={styles.safeArea}>
+    <SafeAreaView edges={['top']} style={[styles.safeArea, { backgroundColor: theme.background }]}>
       <ScrollView
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}
