@@ -7,6 +7,7 @@
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { styles } from './styles';
+import { useTheme } from '@/hooks/use-theme';
 
 interface ActionItemProps {
   label: string;
@@ -23,21 +24,23 @@ export function ActionItem({
   isDestructive = false,
   onPress,
 }: ActionItemProps) {
+  const theme = useTheme();
+
   return (
     <TouchableOpacity
       activeOpacity={0.8}
-      style={styles.cardContainer}
+      style={[styles.cardContainer, { backgroundColor: theme.backgroundElement, borderColor: theme.border }]}
       onPress={onPress}
     >
       <View style={styles.leftContent}>
         {iconEmoji && <Text style={styles.iconEmoji}>{iconEmoji}</Text>}
-        <Text style={isDestructive ? styles.destructiveText : styles.labelText}>
+        <Text style={[isDestructive ? styles.destructiveText : styles.labelText, !isDestructive && { color: theme.text }]}>
           {label}
         </Text>
       </View>
       
       {showChevron && (
-        <Text style={styles.chevronText}>{"›"}</Text>
+        <Text style={[styles.chevronText, { color: theme.textSecondary }]}>{"›"}</Text>
       )}
     </TouchableOpacity>
   );

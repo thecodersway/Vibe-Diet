@@ -8,6 +8,7 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import Svg, { Circle, Path } from 'react-native-svg';
 import { styles } from './styles';
+import { useTheme } from '@/hooks/use-theme';
 
 interface ProfileHeaderProps {
   name: string;
@@ -16,9 +17,11 @@ interface ProfileHeaderProps {
 }
 
 export function ProfileHeader({ name, goal, avatarColor }: ProfileHeaderProps) {
+  const theme = useTheme();
+
   return (
     <View style={styles.container}>
-      <View style={[styles.avatarWrapper, { borderColor: avatarColor }]}>
+      <View style={[styles.avatarWrapper, { borderColor: avatarColor, backgroundColor: theme.backgroundElement }]}>
         <View style={styles.avatarInner}>
           <Svg width="36" height="36" viewBox="0 0 24 24" fill="none">
             <Circle
@@ -39,7 +42,7 @@ export function ProfileHeader({ name, goal, avatarColor }: ProfileHeaderProps) {
       </View>
 
       <View style={styles.textContainer}>
-        <Text style={styles.nameText}>{name}</Text>
+        <Text style={[styles.nameText, { color: theme.primary }]}>{name}</Text>
         <View style={styles.goalBadge}>
           <View style={styles.goalDot} />
           <Text style={styles.goalText}>Goal: {goal}</Text>

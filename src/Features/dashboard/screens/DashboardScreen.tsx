@@ -8,21 +8,23 @@ import React, { useState } from 'react';
 import { ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { HeaderSection } from './components/HeaderSection';
-import { FuelCard } from './components/FuelCard';
-import { StatsRow } from './components/StatsRow';
-import { MealTimeline } from './components/MealTimeline';
+import { HeaderSection } from '../components/HeaderSection';
+import { FuelCard } from '../components/FuelCard';
+import { StatsRow } from '../components/StatsRow';
+import { MealTimeline } from '../components/MealTimeline';
 
-import { mockDailyProgress, mockMeals } from './mockData';
-import { DailyProgress, Meal } from './types';
-import { styles } from './styles';
+import { mockDailyProgress, mockMeals } from '../mockData';
+import { DailyProgress, Meal } from '../types';
+import { styles } from '../styles';
+import { useTheme } from '@/hooks/use-theme';
 
-export default function DashboardFeature() {
+export default function DashboardScreen() {
+  const theme = useTheme();
   const [dailyProgress] = useState<DailyProgress>(mockDailyProgress);
   const [meals] = useState<Meal[]>(mockMeals);
 
   return (
-    <SafeAreaView edges={['top']} style={styles.safeArea}>
+    <SafeAreaView edges={['top']} style={[styles.safeArea, { backgroundColor: theme.background }]}>
       <ScrollView
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}

@@ -8,6 +8,7 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import Svg, { Circle } from 'react-native-svg';
 import { styles } from './styles';
+import { useTheme } from '@/hooks/use-theme';
 
 interface ProgressRingProps {
   size: number;
@@ -24,6 +25,7 @@ export function ProgressRing({
   color,
   eatenValue,
 }: ProgressRingProps) {
+  const theme = useTheme();
   const radius = (size - strokeWidth) / 2;
   const circumference = radius * 2 * Math.PI;
   const strokeDashoffset = circumference - progress * circumference;
@@ -35,7 +37,7 @@ export function ProgressRing({
           cx={size / 2}
           cy={size / 2}
           r={radius}
-          stroke="#202329"
+          stroke={theme.border}
           strokeWidth={strokeWidth}
           fill="transparent"
         />
@@ -53,8 +55,8 @@ export function ProgressRing({
         />
       </Svg>
       <View style={styles.contentContainer}>
-        <Text style={styles.valueText}>{eatenValue}</Text>
-        <Text style={styles.labelText}>EATEN</Text>
+        <Text style={[styles.valueText, { color: theme.text }]}>{eatenValue}</Text>
+        <Text style={[styles.labelText, { color: theme.textSecondary }]}>EATEN</Text>
       </View>
     </View>
   );

@@ -8,22 +8,25 @@ import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import Svg, { Circle, Path } from 'react-native-svg';
 import { styles } from './styles';
+import { useTheme } from '@/hooks/use-theme';
 
 interface HeaderSectionProps {
   vibeName: string;
 }
 
 export function HeaderSection({ vibeName }: HeaderSectionProps) {
+  const theme = useTheme();
+
   return (
     <View style={styles.container}>
       <View style={styles.leftColumn}>
         <View style={styles.vibeBadge}>
           <Text style={styles.vibeBadgeText}>{"✨ TODAY'S VIBE"}</Text>
         </View>
-        <Text style={styles.titleText}>{vibeName} ✨</Text>
+        <Text style={[styles.titleText, { color: theme.primary }]}>{vibeName} ✨</Text>
       </View>
 
-      <TouchableOpacity activeOpacity={0.8} style={styles.crownButton}>
+      <TouchableOpacity activeOpacity={0.8} style={[styles.crownButton, { backgroundColor: theme.backgroundElement }]}>
         <View style={styles.crownInner}>
           <Svg width="22" height="22" viewBox="0 0 24 24" fill="none">
             <Circle
