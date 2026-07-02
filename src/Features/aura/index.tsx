@@ -7,6 +7,7 @@
 import React from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import { styles } from './styles';
+import { useTheme } from '@/hooks/use-theme';
 
 interface Badge {
   id: string;
@@ -51,56 +52,58 @@ const MOCK_INSIGHTS: Insight[] = [
 ];
 
 export default function AuraFeature() {
+  const theme = useTheme();
+
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: theme.background }]}>
       <View style={styles.header}>
-        <Text style={styles.title}>MY AURA</Text>
-        <Text style={styles.subtitle}>AI Vibe & Diet Analytics</Text>
+        <Text style={[styles.title, { color: theme.text }]}>MY AURA</Text>
+        <Text style={[styles.subtitle, { color: theme.textSecondary }]}>AI Vibe & Diet Analytics</Text>
       </View>
 
       {/* Main Vibe Score */}
-      <View style={styles.scoreCard}>
-        <View style={styles.scoreBackgroundGlow} />
-        <Text style={styles.scoreLabel}>WEEKLY VIBE CHECK</Text>
+      <View style={[styles.scoreCard, { backgroundColor: theme.backgroundElement, borderColor: theme.border }]}>
+        <View style={[styles.scoreBackgroundGlow, { backgroundColor: theme.accentSolid }]} />
+        <Text style={[styles.scoreLabel, { color: theme.textSecondary }]}>WEEKLY VIBE CHECK</Text>
         <View style={styles.scoreValueRow}>
-          <Text style={styles.scoreValue}>98</Text>
+          <Text style={[styles.scoreValue, { color: theme.accentSolid, textShadowColor: theme.accentSolid + '66' }]}>98</Text>
         </View>
-        <Text style={styles.scoreDesc}>
+        <Text style={[styles.scoreDesc, { color: theme.text }]}>
           {"Your diet and mood sync is exceptionally high. You're in prime energy balance!"}
         </Text>
       </View>
 
-      <Text style={styles.sectionTitle}>Earned Badges</Text>
+      <Text style={[styles.sectionTitle, { color: theme.text }]}>Earned Badges</Text>
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
         style={styles.badgesScroll}
       >
         {MOCK_BADGES.map((badge) => (
-          <View key={badge.id} style={styles.badgeCard}>
-            <View style={styles.badgeIconWrapper}>
+          <View key={badge.id} style={[styles.badgeCard, { backgroundColor: theme.backgroundElement, borderColor: theme.border }]}>
+            <View style={[styles.badgeIconWrapper, { backgroundColor: theme.accentBg }]}>
               <Text style={styles.badgeIcon}>{badge.emoji}</Text>
             </View>
-            <Text style={styles.badgeName}>{badge.name}</Text>
-            <Text style={styles.badgeLevel}>{badge.level}</Text>
+            <Text style={[styles.badgeName, { color: theme.text }]}>{badge.name}</Text>
+            <Text style={[styles.badgeLevel, { color: theme.accentSolid }]}>{badge.level}</Text>
           </View>
         ))}
       </ScrollView>
 
-      <Text style={styles.sectionTitle}>Weekly Insights</Text>
+      <Text style={[styles.sectionTitle, { color: theme.text }]}>Weekly Insights</Text>
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={styles.insightsList}
         contentContainerStyle={styles.scrollContent}
       >
         {MOCK_INSIGHTS.map((insight) => (
-          <View key={insight.id} style={styles.insightCard}>
-            <View style={styles.insightIconBg}>
+          <View key={insight.id} style={[styles.insightCard, { backgroundColor: theme.backgroundElement, borderColor: theme.border }]}>
+            <View style={[styles.insightIconBg, { backgroundColor: theme.backgroundSelected }]}>
               <Text style={{ fontSize: 18 }}>{insight.icon}</Text>
             </View>
             <View style={styles.insightTextWrapper}>
-              <Text style={styles.insightTitle}>{insight.title}</Text>
-              <Text style={styles.insightDesc}>{insight.description}</Text>
+              <Text style={[styles.insightTitle, { color: theme.text }]}>{insight.title}</Text>
+              <Text style={[styles.insightDesc, { color: theme.textSecondary }]}>{insight.description}</Text>
             </View>
           </View>
         ))}

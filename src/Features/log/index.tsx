@@ -7,6 +7,7 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { styles } from './styles';
+import { useTheme } from '@/hooks/use-theme';
 
 interface LogItem {
   id: string;
@@ -33,14 +34,15 @@ const WEEK_DAYS = [
 ];
 
 export default function LogFeature() {
+  const theme = useTheme();
   const [selectedNum, setSelectedNum] = useState('16');
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: theme.background }]}>
       <View style={styles.header}>
         <View>
-          <Text style={styles.title}>DIET LOG</Text>
-          <Text style={styles.subtitle}>Track your daily vibe fuel</Text>
+          <Text style={[styles.title, { color: theme.text }]}>DIET LOG</Text>
+          <Text style={[styles.subtitle, { color: theme.textSecondary }]}>Track your daily vibe fuel</Text>
         </View>
       </View>
 
@@ -53,12 +55,16 @@ export default function LogFeature() {
               key={item.num}
               activeOpacity={0.8}
               onPress={() => setSelectedNum(item.num)}
-              style={[styles.dateCard, isActive && styles.activeDateCard]}
+              style={[
+                styles.dateCard,
+                { backgroundColor: theme.backgroundElement, borderColor: theme.border },
+                isActive && { backgroundColor: theme.primary, borderColor: theme.primary }
+              ]}
             >
-              <Text style={[styles.dateDay, isActive && styles.activeDateDay]}>
+              <Text style={[styles.dateDay, { color: theme.textSecondary }, isActive && { color: theme.textInverse }]}>
                 {item.day}
               </Text>
-              <Text style={[styles.dateNum, isActive && styles.activeDateNum]}>
+              <Text style={[styles.dateNum, { color: theme.text }, isActive && { color: theme.textInverse }]}>
                 {item.num}
               </Text>
             </TouchableOpacity>
@@ -67,29 +73,29 @@ export default function LogFeature() {
       </View>
 
       {/* Macros Recap */}
-      <View style={styles.summaryCard}>
-        <Text style={styles.summaryHeader}>{"TODAY'S FUEL RECAP"}</Text>
+      <View style={[styles.summaryCard, { backgroundColor: theme.backgroundElement, borderColor: theme.border }]}>
+        <Text style={[styles.summaryHeader, { color: theme.accentSolid }]}>{"TODAY'S FUEL RECAP"}</Text>
         <View style={styles.macroRow}>
           <View style={styles.macroItem}>
-            <Text style={styles.macroValue}>1,495</Text>
-            <Text style={styles.macroLabel}>CALORIES</Text>
+            <Text style={[styles.macroValue, { color: theme.text }]}>1,495</Text>
+            <Text style={[styles.macroLabel, { color: theme.textSecondary }]}>CALORIES</Text>
           </View>
           <View style={styles.macroItem}>
-            <Text style={styles.macroValue}>112g</Text>
-            <Text style={styles.macroLabel}>PROTEIN</Text>
+            <Text style={[styles.macroValue, { color: theme.text }]}>112g</Text>
+            <Text style={[styles.macroLabel, { color: theme.textSecondary }]}>PROTEIN</Text>
           </View>
           <View style={styles.macroItem}>
-            <Text style={styles.macroValue}>142g</Text>
-            <Text style={styles.macroLabel}>CARBS</Text>
+            <Text style={[styles.macroValue, { color: theme.text }]}>142g</Text>
+            <Text style={[styles.macroLabel, { color: theme.textSecondary }]}>CARBS</Text>
           </View>
           <View style={styles.macroItem}>
-            <Text style={styles.macroValue}>48g</Text>
-            <Text style={styles.macroLabel}>FATS</Text>
+            <Text style={[styles.macroValue, { color: theme.text }]}>48g</Text>
+            <Text style={[styles.macroLabel, { color: theme.textSecondary }]}>FATS</Text>
           </View>
         </View>
       </View>
 
-      <Text style={styles.sectionTitle}>Logged Items</Text>
+      <Text style={[styles.sectionTitle, { color: theme.text }]}>Logged Items</Text>
 
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -97,20 +103,20 @@ export default function LogFeature() {
         contentContainerStyle={styles.scrollContent}
       >
         {MOCK_LOG_ITEMS.map((item) => (
-          <View key={item.id} style={styles.logCard}>
+          <View key={item.id} style={[styles.logCard, { backgroundColor: theme.backgroundElement, borderColor: theme.border }]}>
             <View style={styles.logInfo}>
-              <Text style={styles.logTime}>{item.time}</Text>
-              <Text style={styles.logName}>{item.name}</Text>
-              <Text style={styles.logDetails}>{item.amount}</Text>
+              <Text style={[styles.logTime, { color: theme.accentSolid }]}>{item.time}</Text>
+              <Text style={[styles.logName, { color: theme.text }]}>{item.name}</Text>
+              <Text style={[styles.logDetails, { color: theme.textSecondary }]}>{item.amount}</Text>
             </View>
-            <View style={styles.caloriesBadge}>
-              <Text style={styles.caloriesText}>+{item.calories} kcal</Text>
+            <View style={[styles.caloriesBadge, { backgroundColor: theme.backgroundSelected }]}>
+              <Text style={[styles.caloriesText, { color: theme.accentSolid }]}>+{item.calories} kcal</Text>
             </View>
           </View>
         ))}
 
-        <TouchableOpacity activeOpacity={0.8} style={styles.addButton}>
-          <Text style={styles.addButtonText}>+ QUICK LOG FOOD</Text>
+        <TouchableOpacity activeOpacity={0.8} style={[styles.addButton, { backgroundColor: theme.primary, shadowColor: theme.primary }]}>
+          <Text style={[styles.addButtonText, { color: theme.textInverse }]}>+ QUICK LOG FOOD</Text>
         </TouchableOpacity>
       </ScrollView>
     </View>

@@ -1,5 +1,5 @@
-import DashboardFeature from '@/Features/dashboard';
+import { Redirect } from 'expo-router';
 
-export default function HomeScreen() {
-  return <DashboardFeature />;
+export default function Index() {
+  return <Redirect href="/onboarding/carousel" />;
 }

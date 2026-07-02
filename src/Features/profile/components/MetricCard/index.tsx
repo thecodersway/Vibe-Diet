@@ -7,6 +7,7 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import { styles } from './styles';
+import { useTheme } from '@/hooks/use-theme';
 
 interface MetricCardProps {
   label: string;
@@ -14,10 +15,12 @@ interface MetricCardProps {
 }
 
 export function MetricCard({ label, value }: MetricCardProps) {
+  const theme = useTheme();
+
   return (
-    <View style={styles.cardContainer}>
-      <Text style={styles.labelText}>{label}</Text>
-      <Text style={styles.valueText}>{value}</Text>
+    <View style={[styles.cardContainer, { backgroundColor: theme.backgroundElement, borderColor: theme.border }]}>
+      <Text style={[styles.labelText, { color: theme.textSecondary }]}>{label}</Text>
+      <Text style={[styles.valueText, { color: theme.text }]}>{value}</Text>
     </View>
   );
 }

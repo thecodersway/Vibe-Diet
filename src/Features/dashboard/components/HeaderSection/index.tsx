@@ -4,28 +4,30 @@
  * shortcut containing a neon user silhouette SVG icon.
  */
 
-import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
-import { styles } from './styles';
 import { ProfileNeonIcon } from '@/asset';
+import { useTheme } from '@/hooks/use-theme';
+import { Text, TouchableOpacity, View } from 'react-native';
+import { styles } from './styles';
 
 interface HeaderSectionProps {
   vibeName: string;
 }
 
 export function HeaderSection({ vibeName }: HeaderSectionProps) {
+  const theme = useTheme();
+
   return (
     <View style={styles.container}>
       <View style={styles.leftColumn}>
-        <View style={styles.vibeBadge}>
-          <Text style={styles.vibeBadgeText}>{"✨ TODAY'S VIBE"}</Text>
+        <View style={[styles.vibeBadge, { backgroundColor: theme.accentBg, borderColor: theme.accentBorder }]}>
+          <Text style={[styles.vibeBadgeText, { color: theme.accentSolid }]}>{"✨ TODAY'S VIBE"}</Text>
         </View>
-        <Text style={styles.titleText}>{vibeName} ✨</Text>
+        <Text style={[styles.titleText, { color: theme.text }]}>{vibeName} ✨</Text>
       </View>
 
-      <TouchableOpacity activeOpacity={0.8} style={styles.crownButton}>
-        <View style={styles.crownInner}>
-          <ProfileNeonIcon color="#C2FF1A" size={22} />
+      <TouchableOpacity activeOpacity={0.8} style={[styles.crownButton, { backgroundColor: theme.primaryMuted, borderColor: theme.accentBorder }]}>
+        <View style={[styles.crownInner, { backgroundColor: theme.backgroundElement, borderColor: theme.border }]}>
+          <ProfileNeonIcon color={theme.accentSolid} size={22} />
         </View>
       </TouchableOpacity>
     </View>

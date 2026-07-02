@@ -9,6 +9,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { styles } from './styles';
 import { HomeIcon, LogIcon, CameraIcon, AuraIcon, MeIcon } from '@/asset';
+import { useTheme } from '@/hooks/use-theme';
 
 function getTabLabel(routeName: string) {
   switch (routeName) {
@@ -25,8 +26,8 @@ function getTabLabel(routeName: string) {
   }
 }
 
-function renderIcon(routeName: string, isFocused: boolean) {
-  const color = isFocused ? '#C2FF1A' : '#8E939E';
+function renderIcon(routeName: string, isFocused: boolean, theme: any) {
+  const color = isFocused ? theme.activeTab : theme.inactiveTab;
 
   switch (routeName) {
     case 'index':
@@ -34,7 +35,7 @@ function renderIcon(routeName: string, isFocused: boolean) {
     case 'log':
       return <LogIcon color={color} size={24} />;
     case 'camera':
-      return <CameraIcon color="#16181C" size={26} />;
+      return <CameraIcon color={theme.textInverse} size={26} />;
     case 'aura':
       return <AuraIcon color={color} size={24} />;
     case 'me':
@@ -45,8 +46,10 @@ function renderIcon(routeName: string, isFocused: boolean) {
 }
 
 export function BottomTabBar({ state, descriptors, navigation }: any) {
+  const theme = useTheme();
+
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: theme.tabBarBg, borderColor: theme.tabBarBorder }]}>
       {state.routes.map((route: any, index: number) => {
         const isFocused = state.index === index;
 
@@ -77,9 +80,16 @@ export function BottomTabBar({ state, descriptors, navigation }: any) {
                 activeOpacity={0.8}
                 onPress={onPress}
                 onLongPress={onLongPress}
-                style={styles.cameraButton}
+                style={[
+                  styles.cameraButton,
+                  {
+                    backgroundColor: theme.primary,
+                    borderColor: theme.cameraBorder,
+                    shadowColor: theme.primary,
+                  }
+                ]}
               >
-                {renderIcon('camera', true)}
+                {renderIcon('camera', true, theme)}
               </TouchableOpacity>
             </View>
           );
@@ -93,11 +103,11 @@ export function BottomTabBar({ state, descriptors, navigation }: any) {
             onLongPress={onLongPress}
             style={styles.tabButton}
           >
-            {renderIcon(route.name, isFocused)}
+            {renderIcon(route.name, isFocused, theme)}
             <Text
               style={[
                 styles.tabLabel,
-                { color: isFocused ? '#C2FF1A' : '#8E939E' },
+                { color: isFocused ? theme.activeTab : theme.inactiveTab },
               ]}
             >
               {getTabLabel(route.name)}
