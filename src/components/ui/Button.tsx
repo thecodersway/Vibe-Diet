@@ -22,7 +22,7 @@ export function Button({ label, variant = 'primary', isLoading, style, disabled,
     if (disabled && variant === 'primary') return theme.textSecondary;
     if (variant === 'outline') return theme.text;
     if (variant === 'secondary') return theme.text;
-    return '#FFFFFF';
+    return theme.textInverse || '#FFFFFF';
   };
 
   return (

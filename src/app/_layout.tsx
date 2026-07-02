@@ -4,7 +4,17 @@ import { StatusBar } from 'expo-status-bar';
 
 import { AnimatedSplashOverlay } from '@/components/animated-icon';
 
+import { AppThemeProvider } from '@/hooks/use-theme';
+
 export default function RootLayout() {
+  return (
+    <AppThemeProvider>
+      <LayoutContent />
+    </AppThemeProvider>
+  );
+}
+
+function LayoutContent() {
   const colorScheme = useColorScheme();
 
   return (
@@ -18,3 +28,4 @@ export default function RootLayout() {
     </ThemeProvider>
   );
 }
+

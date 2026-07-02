@@ -34,12 +34,12 @@ export function FuelCard({
         <View style={styles.leftColumn}>
           <Text style={[styles.labelText, { color: theme.textSecondary }]}>FUEL REMAINING</Text>
           <View style={styles.valueRow}>
-            <Text style={[styles.valueText, { color: theme.primary }]}>{formatNum(remainingFuel)}</Text>
+            <Text style={[styles.valueText, { color: theme.text }]}>{formatNum(remainingFuel)}</Text>
             <Text style={[styles.unitText, { color: theme.textSecondary }]}>kcal</Text>
           </View>
-          <View style={styles.goalBadge}>
-            <View style={styles.goalDot} />
-            <Text style={styles.goalText}>Goal: {formatNum(goalFuel)}</Text>
+          <View style={[styles.goalBadge, { backgroundColor: theme.accentBg, borderColor: theme.accentBorder }]}>
+            <View style={[styles.goalDot, { backgroundColor: theme.accentSolid }]} />
+            <Text style={[styles.goalText, { color: theme.accentSolid }]}>Goal: {formatNum(goalFuel)}</Text>
           </View>
         </View>
 
@@ -48,7 +48,7 @@ export function FuelCard({
             size={110}
             strokeWidth={10}
             progress={progressRatio}
-            color="#C2FF1A"
+            color={theme.accentSolid}
             eatenValue={eatenFuel}
           />
         </View>
@@ -65,13 +65,13 @@ export function FuelCard({
                 <Text style={[styles.macroSlash, { color: theme.textSecondary }]}>/</Text>
                 <Text style={[styles.macroTarget, { color: theme.textSecondary }]}>{macro.target}{macro.unit}</Text>
               </View>
-              <View style={styles.progressBarBg}>
+              <View style={[styles.progressBarBg, { backgroundColor: theme.border }]}>
                 <View
                   style={[
                     styles.progressBarActive,
                     {
                       width: `${ratio * 100}%`,
-                      backgroundColor: macro.color,
+                      backgroundColor: macro.color === '#C2FF1A' ? theme.accentSolid : macro.color,
                     },
                   ]}
                 />

@@ -1,0 +1,158 @@
+import { StyleSheet, Platform } from 'react-native';
+
+export const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#0D0F12',
+    paddingTop: Platform.OS === 'ios' ? 60 : 40,
+    paddingHorizontal: 20,
+  },
+  header: {
+    marginBottom: 24,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: '900',
+    color: '#FFFFFF',
+    letterSpacing: 0.5,
+  },
+  subtitle: {
+    fontSize: 13,
+    fontWeight: '700',
+    color: '#8E939E',
+    marginTop: 4,
+  },
+  scoreCard: {
+    backgroundColor: '#16181C',
+    borderRadius: 28,
+    padding: 24,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#24272D',
+    marginBottom: 24,
+    position: 'relative',
+    overflow: 'hidden',
+  },
+  scoreBackgroundGlow: {
+    position: 'absolute',
+    top: -50,
+    width: 200,
+    height: 200,
+    borderRadius: 100,
+    backgroundColor: '#C2FF1A',
+    opacity: 0.08,
+    // Blur filter simulator
+  },
+  scoreValueRow: {
+    flexDirection: 'row',
+    alignItems: 'baseline',
+    marginTop: 8,
+  },
+  scoreValue: {
+    fontSize: 64,
+    fontWeight: '900',
+    color: '#C2FF1A',
+    // Neon text glow
+    textShadowColor: 'rgba(194, 255, 26, 0.4)',
+    textShadowOffset: { width: 0, height: 4 },
+    textShadowRadius: 12,
+  },
+  scoreLabel: {
+    fontSize: 12,
+    fontWeight: '800',
+    color: '#8E939E',
+    letterSpacing: 1,
+  },
+  scoreDesc: {
+    fontSize: 13,
+    fontWeight: '700',
+    color: '#FFFFFF',
+    marginTop: 12,
+    textAlign: 'center',
+  },
+  sectionTitle: {
+    fontSize: 16,
+    fontWeight: '800',
+    color: '#FFFFFF',
+    marginBottom: 16,
+  },
+  badgesScroll: {
+    marginBottom: 24,
+    flexGrow: 0,
+  },
+  badgeCard: {
+    backgroundColor: '#16181C',
+    borderRadius: 20,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
+    alignItems: 'center',
+    marginRight: 12,
+    borderWidth: 1,
+    borderColor: '#24272D',
+    width: 120,
+  },
+  badgeIconWrapper: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: 'rgba(194, 255, 26, 0.1)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 8,
+  },
+  badgeIcon: {
+    fontSize: 20,
+  },
+  badgeName: {
+    fontSize: 12,
+    fontWeight: '800',
+    color: '#FFFFFF',
+    textAlign: 'center',
+  },
+  badgeLevel: {
+    fontSize: 9,
+    fontWeight: '700',
+    color: '#C2FF1A',
+    marginTop: 4,
+  },
+  insightsList: {
+    flex: 1,
+  },
+  scrollContent: {
+    paddingBottom: Platform.OS === 'ios' ? 130 : 116,
+  },
+  insightCard: {
+    backgroundColor: '#16181C',
+    borderRadius: 20,
+    padding: 16,
+    borderWidth: 1,
+    borderColor: '#24272D',
+    marginBottom: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  insightIconBg: {
+    width: 40,
+    height: 40,
+    borderRadius: 12,
+    backgroundColor: '#24272D',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 16,
+  },
+  insightTextWrapper: {
+    flex: 1,
+  },
+  insightTitle: {
+    fontSize: 14,
+    fontWeight: '800',
+    color: '#FFFFFF',
+  },
+  insightDesc: {
+    fontSize: 11,
+    fontWeight: '600',
+    color: '#8E939E',
+    marginTop: 2,
+    lineHeight: 14,
+  },
+});

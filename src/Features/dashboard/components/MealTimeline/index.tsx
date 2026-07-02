@@ -21,11 +21,11 @@ export function MealTimeline({ meals }: MealTimelineProps) {
     <View style={styles.container}>
       <View style={styles.headerRow}>
         <View style={styles.titleWrapper}>
-          <Text style={[styles.sectionTitle, { color: theme.primary }]}>{"Today's Grub"}</Text>
+          <Text style={[styles.sectionTitle, { color: theme.text }]}>{"Today's Grub"}</Text>
           <Text style={styles.plateEmoji}>🍽️</Text>
         </View>
-        <TouchableOpacity activeOpacity={0.7} style={styles.seeAllButton}>
-          <Text style={styles.seeAllText}>See All</Text>
+        <TouchableOpacity activeOpacity={0.7} style={[styles.seeAllButton, { backgroundColor: theme.primaryMuted, borderColor: theme.border }]}>
+          <Text style={[styles.seeAllText, { color: theme.text }]}>See All</Text>
         </TouchableOpacity>
       </View>
 
@@ -36,11 +36,11 @@ export function MealTimeline({ meals }: MealTimelineProps) {
           return (
             <View key={meal.id} style={styles.timelineItem}>
               <View style={styles.leftLineColumn}>
-                {!isLast && <View style={[styles.verticalLine, { borderColor: theme.border }]} />}
+                {!isLast && <View style={[styles.verticalLine, { backgroundColor: theme.border }]} />}
 
                 {meal.isCompleted ? (
-                  <View style={styles.completedIndicatorOuter}>
-                    <View style={styles.completedIndicatorInner} />
+                  <View style={[styles.completedIndicatorOuter, { backgroundColor: theme.accentBg, borderColor: theme.accentBorder }]}>
+                    <View style={[styles.completedIndicatorInner, { backgroundColor: theme.accentSolid }]} />
                   </View>
                 ) : (
                   <View style={[styles.emptyIndicator, { backgroundColor: theme.background, borderColor: theme.border }]} />
@@ -53,12 +53,12 @@ export function MealTimeline({ meals }: MealTimelineProps) {
                     <View style={styles.cardHeader}>
                       <Text style={[styles.timeText, { color: theme.textSecondary }]}>{meal.time}</Text>
                       {meal.kcal && (
-                        <View style={styles.kcalBadge}>
-                          <Text style={styles.kcalBadgeText}>{meal.kcal} kcal</Text>
+                        <View style={[styles.kcalBadge, { backgroundColor: theme.accentBg }]}>
+                          <Text style={[styles.kcalBadgeText, { color: theme.accentSolid }]}>{meal.kcal} kcal</Text>
                         </View>
                       )}
                     </View>
-                    <Text style={[styles.mealTitle, { color: theme.primary }]}>{meal.type}</Text>
+                    <Text style={[styles.mealTitle, { color: theme.text }]}>{meal.type}</Text>
                     <Text style={[styles.mealDesc, { color: theme.textSecondary }]}>{meal.description}</Text>
                   </View>
                 ) : (
@@ -68,8 +68,8 @@ export function MealTimeline({ meals }: MealTimelineProps) {
                     </View>
                     <Text style={[styles.emptyMealTitle, { color: theme.textSecondary }]}>{meal.type}</Text>
 
-                    <TouchableOpacity activeOpacity={0.8} style={[styles.addMealButton, { backgroundColor: theme.primary + '1A', borderColor: theme.primary + '33' }]}>
-                      <Text style={[styles.addMealButtonText, { color: theme.primary }]}>+ Add Meal</Text>
+                    <TouchableOpacity activeOpacity={0.8} style={[styles.addMealButton, { backgroundColor: theme.primaryMuted, borderColor: theme.border }]}>
+                      <Text style={[styles.addMealButtonText, { color: theme.text }]}>+ Add Meal</Text>
                     </TouchableOpacity>
                   </View>
                 )}
