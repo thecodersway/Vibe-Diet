@@ -1,13 +1,9 @@
-/**
- * AuraFeature Component
- * Displays weekly vibe scoring indices, visual progress gauges, earned badges,
- * and AI-driven dietary trend insights.
- */
-
-import React from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import React, { useEffect, useState, useCallback } from 'react';
+import { View, Text, ScrollView, ActivityIndicator, RefreshControl } from 'react-native';
 import { styles } from './styles';
 import { useTheme } from '@/hooks/use-theme';
+import { supabase } from '@/lib/supabase';
+import { useFocusEffect } from 'expo-router';
 
 interface Badge {
   id: string;
@@ -23,39 +19,72 @@ interface Insight {
   icon: string;
 }
 
-const MOCK_BADGES: Badge[] = [
-  { id: '1', emoji: '🧘', name: 'Chill Zen', level: 'Level 3' },
-  { id: '2', emoji: '💪', name: 'Protein Beast', level: 'Level 2' },
-  { id: '3', emoji: '⚡', name: 'Sync Master', level: 'Level 4' },
-  { id: '4', emoji: '💧', name: 'Aqua God', level: 'Level 1' },
-];
-
-const MOCK_INSIGHTS: Insight[] = [
-  {
-    id: '1',
-    title: 'Optimized Energy Stability',
-    description: 'Carbohydrate splits from lunch aligned perfectly with your active window, preventing afternoon blood sugar dips.',
-    icon: '📈',
-  },
-  {
-    id: '2',
-    title: 'Matcha Brain Boosting',
-    description: 'Ceremonial matcha logs matched high cognitive focus states. Keep matching caffeine with L-theanine.',
-    icon: '🍵',
-  },
-  {
-    id: '3',
-    title: 'Macronutrient Sync Perfected',
-    description: 'Protein goals met 4 days in a row! Muscle repair cycles are functioning at peak efficiency.',
-    icon: '🔋',
-  },
-];
-
 export default function AuraFeature() {
   const theme = useTheme();
 
+  const [score, setScore] = useState(50);
+  const [vibeTitle, setVibeTitle] = useState('Neutral Vibe');
+  const [vibeDesc, setVibeDesc] = useState('Log your meals to discover your active nutrition aura!');
+  const [badges, setBadges] = useState<Badge[]>([]);
+  const [insights, setInsights] = useState<Insight[]>([]);
+  
+  const [isLoading, setIsLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const loadAuraData = useCallback(async () => {
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) return;
+
+      const { data, error } = await supabase.rpc('get_weekly_aura', {
+        p_user_id: session.user.id,
+      });
+
+      if (error) throw error;
+
+      if (data) {
+        setScore(data.score || 50);
+        setVibeTitle(data.vibeTitle || 'Neutral Vibe');
+        setVibeDesc(data.vibeDesc || 'Log your meals to see stats.');
+        setBadges(data.badges || []);
+        setInsights(data.insights || []);
+      }
+    } catch (err) {
+      console.error('Error loading weekly aura:', err);
+    } finally {
+      setIsLoading(false);
+      setRefreshing(false);
+    }
+  }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      loadAuraData();
+    }, [loadAuraData])
+  );
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    loadAuraData();
+  }, [loadAuraData]);
+
+  if (isLoading && !refreshing) {
+    return (
+      <View style={[styles.container, { backgroundColor: theme.background, justifyContent: 'center', alignItems: 'center' }]}>
+        <ActivityIndicator size="large" color={theme.primary} />
+      </View>
+    );
+  }
+
   return (
-    <View style={[styles.container, { backgroundColor: theme.background }]}>
+    <ScrollView
+      style={[styles.container, { backgroundColor: theme.background }]}
+      contentContainerStyle={{ paddingBottom: 40 }}
+      showsVerticalScrollIndicator={false}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={theme.primary} />
+      }
+    >
       <View style={styles.header}>
         <Text style={[styles.title, { color: theme.text }]}>MY AURA</Text>
         <Text style={[styles.subtitle, { color: theme.textSecondary }]}>AI Vibe & Diet Analytics</Text>
@@ -66,10 +95,15 @@ export default function AuraFeature() {
         <View style={[styles.scoreBackgroundGlow, { backgroundColor: theme.accentSolid }]} />
         <Text style={[styles.scoreLabel, { color: theme.textSecondary }]}>WEEKLY VIBE CHECK</Text>
         <View style={styles.scoreValueRow}>
-          <Text style={[styles.scoreValue, { color: theme.accentSolid, textShadowColor: theme.accentSolid + '66' }]}>98</Text>
+          <Text style={[styles.scoreValue, { color: theme.accentSolid, textShadowColor: theme.accentSolid + '66' }]}>
+            {score}
+          </Text>
         </View>
-        <Text style={[styles.scoreDesc, { color: theme.text }]}>
-          {"Your diet and mood sync is exceptionally high. You're in prime energy balance!"}
+        <Text style={[styles.scoreDesc, { color: theme.text, textAlign: 'center', fontWeight: '600', marginBottom: 4 }]}>
+          {vibeTitle}
+        </Text>
+        <Text style={[styles.scoreDesc, { color: theme.textSecondary, fontSize: 13, textAlign: 'center' }]}>
+          {vibeDesc}
         </Text>
       </View>
 
@@ -78,8 +112,9 @@ export default function AuraFeature() {
         horizontal
         showsHorizontalScrollIndicator={false}
         style={styles.badgesScroll}
+        contentContainerStyle={{ paddingRight: 20 }}
       >
-        {MOCK_BADGES.map((badge) => (
+        {badges.map((badge) => (
           <View key={badge.id} style={[styles.badgeCard, { backgroundColor: theme.backgroundElement, borderColor: theme.border }]}>
             <View style={[styles.badgeIconWrapper, { backgroundColor: theme.accentBg }]}>
               <Text style={styles.badgeIcon}>{badge.emoji}</Text>
@@ -91,13 +126,9 @@ export default function AuraFeature() {
       </ScrollView>
 
       <Text style={[styles.sectionTitle, { color: theme.text }]}>Weekly Insights</Text>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        style={styles.insightsList}
-        contentContainerStyle={styles.scrollContent}
-      >
-        {MOCK_INSIGHTS.map((insight) => (
-          <View key={insight.id} style={[styles.insightCard, { backgroundColor: theme.backgroundElement, borderColor: theme.border }]}>
+      <View style={styles.insightsList}>
+        {insights.map((insight) => (
+          <View key={insight.id} style={[styles.insightCard, { backgroundColor: theme.backgroundElement, borderColor: theme.border, marginBottom: 12 }]}>
             <View style={[styles.insightIconBg, { backgroundColor: theme.backgroundSelected }]}>
               <Text style={{ fontSize: 18 }}>{insight.icon}</Text>
             </View>
@@ -107,7 +138,8 @@ export default function AuraFeature() {
             </View>
           </View>
         ))}
-      </ScrollView>
-    </View>
+      </View>
+    </ScrollView>
   );
 }
+

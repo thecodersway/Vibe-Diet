@@ -55,4 +55,16 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '900',
   },
+  plusIndicator: {
+    position: 'absolute',
+    top: 8,
+    right: 8,
+    width: 18,
+    height: 18,
+    borderRadius: 9,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: '#24272D',
+  },
 });
