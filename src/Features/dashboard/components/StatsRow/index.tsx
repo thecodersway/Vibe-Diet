@@ -1,11 +1,5 @@
-/**
- * StatsRow Component
- * Renders side-by-side metric status panels displaying water consumption levels
- * and burned energy metrics with color-coded theme tags.
- */
-
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { styles } from './styles';
 import { useTheme } from '@/hooks/use-theme';
 
@@ -13,28 +7,39 @@ interface StatsRowProps {
   waterCurrent: number;
   waterTarget: number;
   burnedKcal: number;
+  onAddWaterPress?: () => void;
 }
 
 export function StatsRow({
   waterCurrent,
   waterTarget,
   burnedKcal,
+  onAddWaterPress,
 }: StatsRowProps) {
   const theme = useTheme();
 
   return (
     <View style={styles.container}>
-      <View style={[styles.statCard, { backgroundColor: theme.backgroundElement, borderColor: theme.border }]}>
-        <View style={[styles.iconWrapper, styles.waterIconWrapper]}>
-          <Text style={styles.iconEmoji}>💧</Text>
+      <TouchableOpacity
+        activeOpacity={0.7}
+        onPress={onAddWaterPress}
+        style={[styles.statCard, { backgroundColor: theme.backgroundElement, borderColor: theme.border, position: 'relative' }]}
+      >
+        <View style={[styles.iconWrapper, styles.waterIconWrapper, { width: 52, flexDirection: 'row', paddingHorizontal: 2, justifyContent: 'space-evenly' }]}>
+          <Text style={{ fontSize: 11 }}>💧</Text>
+          <Text style={{ fontSize: 11 }}>☕</Text>
+          <Text style={{ fontSize: 11 }}>🥤</Text>
         </View>
         <View style={styles.textContainer}>
-          <Text style={[styles.label, { color: theme.textSecondary }]}>Water</Text>
+          <Text style={[styles.label, { color: theme.textSecondary }]}>Drinks</Text>
           <Text style={[styles.value, { color: theme.text }]}>
             {waterCurrent} / {waterTarget} L
           </Text>
         </View>
-      </View>
+        <View style={[styles.plusIndicator, { backgroundColor: theme.border }]}>
+          <Text style={{ color: '#22D3EE', fontSize: 11, fontWeight: '900', lineHeight: 12 }}>+</Text>
+        </View>
+      </TouchableOpacity>
 
       <View style={[styles.statCard, { backgroundColor: theme.backgroundElement, borderColor: theme.border }]}>
         <View style={[styles.iconWrapper, styles.burnedIconWrapper]}>

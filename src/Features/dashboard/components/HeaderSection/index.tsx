@@ -11,18 +11,19 @@ import { styles } from './styles';
 
 interface HeaderSectionProps {
   vibeName: string;
+  vibeEmoji: string;
 }
 
-export function HeaderSection({ vibeName }: HeaderSectionProps) {
+export function HeaderSection({ vibeName, vibeEmoji }: HeaderSectionProps) {
   const theme = useTheme();
 
   return (
     <View style={styles.container}>
       <View style={styles.leftColumn}>
         <View style={[styles.vibeBadge, { backgroundColor: theme.accentBg, borderColor: theme.accentBorder }]}>
-          <Text style={[styles.vibeBadgeText, { color: theme.accentSolid }]}>{"✨ TODAY'S VIBE"}</Text>
+          <Text style={[styles.vibeBadgeText, { color: theme.accentSolid }]}>{"⚡ TODAY'S VIBE"}</Text>
         </View>
-        <Text style={[styles.titleText, { color: theme.text }]}>{vibeName} ✨</Text>
+        <Text style={[styles.titleText, { color: theme.text }]}>{vibeName} {vibeEmoji}</Text>
       </View>
 
       <TouchableOpacity activeOpacity={0.8} style={[styles.crownButton, { backgroundColor: theme.primaryMuted, borderColor: theme.accentBorder }]}>
